@@ -1,24 +1,49 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Bet.Modelos.Jogos;
+using Newtonsoft.Json;
 
-namespace Bet.Modelos.Jogos;
-
-internal class Baralho
+public class Baralho
 {
-    [JsonPropertyName("deck_id")]
-    public string IdDeck { get; set; }
+    public bool success { get; set; }
+    public string deck_id { get; set; }
+    public Carta[] cards { get; set; }
+    public int remaining { get; set; }
 
-    [JsonPropertyName("remaining")]
-    public string cartasRestantes { get; set; }
-
-    public string GetIdDeck()
+    public async Task CriarBaralho()
     {
-        return IdDeck;
+        using (HttpClient client = new HttpClient())
+        {
+            var response = await client.GetStringAsync("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1");
+            var baralhoAux = JsonConvert.DeserializeObject<DeckResponse>(response);
+            this.deck_id = baralhoAux.deck_id;
+            this.remaining = baralhoAux.remaining;
+        }
+    }
+    public void mostrarBaralho()
+    {
+        Console.WriteLine($"Deck ID: {deck_id} | restante: {remaining}");
     }
 
-    public string GetRemaining()
+    public async Task PuxarCarta()
     {
-        return cartasRestantes;
+        using (HttpClient client = new HttpClient())
+        {
+            var url = $"https://deckofcardsapi.com/api/deck/{this.deck_id}/draw/?count=1";
+            var response = await client.GetStringAsync(url);
+            var drawResponse = JsonConvert.DeserializeObject<DeckResponse>(response);
+
+            if (drawResponse.success)
+            {
+                Console.WriteLine($"Carta puxada: {drawResponse.cards[0].value} de {drawResponse.cards[0].suit}");
+                this.remaining = drawResponse.remaining;
+            }
+            else
+            {
+                Console.WriteLine("Não foi possível puxar uma carta.");
+            }
+        }
     }
-
-
 }
+
