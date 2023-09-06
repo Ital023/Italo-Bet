@@ -2,10 +2,17 @@
 
 internal class Cliente : Pessoa
 {
-    public int Id { get; set; }
+    private int Id { get; set; }
 
-    public string Senha { get; set; }
+    private string Senha { get; set; }
 
+    public Cliente (string nome,string senha,int idade,int cpf)
+    {
+        SetNome(nome);
+        SetIdade (idade);
+        SetCpf (cpf);
+        Senha = senha;
+    }
 
     public int GetId()
     {

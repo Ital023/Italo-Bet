@@ -1,11 +1,11 @@
 ﻿namespace Bet.Modelos;
     internal class Pessoa
     {
-        public string Nome { get; set; }
+        private string Nome { get; set; }
 
-        public int Idade { get; set; }
+        private int Idade { get; set; }
 
-        public int Cpf { get; set; }
+        private int Cpf { get; set; }
 
         public string GetNome()
         {
@@ -18,6 +18,21 @@
         }
 
         public int GetCpf()
+        {
+            return Cpf;
+        }
+
+        public string SetNome(string Nome)
+        {
+            return Nome;
+        }
+
+        public int SetIdade(int Idade)
+        {
+            return Idade;
+        }
+
+        public int SetCpf(int Cpf)
         {
             return Cpf;
         }
