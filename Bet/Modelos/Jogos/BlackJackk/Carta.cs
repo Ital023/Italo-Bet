@@ -7,6 +7,14 @@ public class Carta
     public string value { get; set; }
     public string suit { get; set; }
 
+    public string getValue()
+    {
+        return value;
+    }
 
+    public string getSuit()
+    {
+        return suit;
+    }
 
 }

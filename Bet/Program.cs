@@ -1,5 +1,6 @@
 ﻿using Bet.Modelos;
 using Bet.Modelos.Jogos;
+using Bet.Modelos.Jogos.BlackJackk;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -8,6 +9,7 @@ internal class Program
     private static async Task Main(string[] args)
     {
         Baralho baralho = new Baralho();
+        Dealer dealer = new Dealer();
         await baralho.CriarBaralho();
 
         int i = 1;
@@ -30,8 +32,8 @@ internal class Program
 
                         if (opcNumCard == 1)
                         {
-                            await baralho.PuxarCarta();
-
+                            Carta carta = await baralho.PuxarCarta();
+                            dealer.addCarta(carta);
                         }
                         else
                         {
@@ -47,6 +49,7 @@ internal class Program
                 case 2:
                     Console.Clear();
                     baralho.mostrarBaralho();
+                    dealer.mostrarMao();
                     Console.ReadKey();
                     break;
                 case 3:
