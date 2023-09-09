@@ -3,7 +3,8 @@
 public class Dealer
 {
     public string Nome { get; set; }
-    public List<Carta> MaoDealer { get; set; }
+
+    public List<Carta> MaoDealer = new List<Carta>();
 
     public void addCarta(Carta carta)
     {

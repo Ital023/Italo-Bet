@@ -12,57 +12,58 @@ internal class Program
         Dealer dealer = new Dealer();
         await baralho.CriarBaralho();
 
-        int i = 1;
 
-        while(i != 0)
-        {
-            menu();
-            await Console.Out.WriteAsync("Insira a opc: ");
-            int opcNum = int.Parse(Console.ReadLine());
+         int i = 1;
 
-            switch (opcNum)
-            {
-                case 1:
-                    Console.Clear();
-                    int j = 1;
-                    while(j != 0)
-                    {
-                        await Console.Out.WriteLineAsync("Deseja puxar uma carta : 1- sim 2- nao");
-                        int opcNumCard = int.Parse(Console.ReadLine());
+         while(i != 0)
+         {
+             menu();
+             await Console.Out.WriteAsync("Insira a opc: ");
+             int opcNum = int.Parse(Console.ReadLine());
 
-                        if (opcNumCard == 1)
-                        {
-                            Carta carta = await baralho.PuxarCarta();
+             switch (opcNum)
+             {
+                 case 1:
+                     Console.Clear();
+                     int j = 1;
+                     while(j != 0)
+                     {
+                         await Console.Out.WriteLineAsync("Deseja puxar uma carta : 1- sim 2- nao");
+                         int opcNumCard = int.Parse(Console.ReadLine());
+
+                         if (opcNumCard == 1)
+                         {
+                             Carta carta = await baralho.PuxarCarta();
                             dealer.addCarta(carta);
-                        }
-                        else
-                        {
-                            j = 0;
-                           
-                        }
-                    }
-                    
+                         }
+                         else
+                         {
+                             j = 0;
+
+                         }
+                     }
 
 
-                    Console.ReadKey();
-                    break;
-                case 2:
-                    Console.Clear();
-                    baralho.mostrarBaralho();
-                    dealer.mostrarMao();
-                    Console.ReadKey();
-                    break;
-                case 3:
-                    i = 0;
-                    break;
-            }
-        }
-        
 
-        
-        
+                     Console.ReadKey();
+                     break;
+                 case 2:
+                     Console.Clear();
+                     baralho.mostrarBaralho();
+                     dealer.mostrarMao();
+                     Console.ReadKey();
+                     break;
+                 case 3:
+                     i = 0;
+                     break;
+             }
+         } 
 
-        
+
+
+
+
+
     }
 
     public static void menu()
