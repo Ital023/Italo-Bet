@@ -3,13 +3,13 @@
 
 namespace Bet.Modelos;
 
-internal class Cliente : Pessoa
+public class Cliente : Pessoa
 {
     private int Id { get; set; }
 
     private string Senha { get; set; }
 
-    public List<Carta> cartas { get; set; }
+    public List<Carta> MaoCliente = new List<Carta>();
 
     public Cliente (string nome,string senha,int idade,int cpf)
     {
@@ -27,5 +27,15 @@ internal class Cliente : Pessoa
     public string GetSenha()
     {
         return Senha;
+    }
+
+    public void addCarta(Carta carta)
+    {
+        MaoCliente.Add(carta);
+    }
+
+    public void removeCarta(Carta carta)
+    {
+        MaoCliente.Remove(carta);
     }
 }

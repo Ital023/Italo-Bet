@@ -8,8 +8,8 @@ internal class Program
 {
     private static async Task Main(string[] args)
     {
-        Baralho baralho = new Baralho();
-        Dealer dealer = new Dealer();
+        /*Baralho baralho = new Baralho();
+        Dealer dealer = new Dealer("Anony");
         await baralho.CriarBaralho();
 
 
@@ -34,7 +34,7 @@ internal class Program
                          if (opcNumCard == 1)
                          {
                              Carta carta = await baralho.PuxarCarta();
-                            dealer.addCarta(carta);
+                             dealer.addCarta(carta);
                          }
                          else
                          {
@@ -53,12 +53,26 @@ internal class Program
                      dealer.mostrarMao();
                      Console.ReadKey();
                      break;
-                 case 3:
+                 case 4:
                      i = 0;
                      break;
              }
          } 
+        */
 
+
+        BlackJack blackJack = new BlackJack();
+        Dealer dealer = new Dealer("Daniel");
+        Cliente cliente = new Cliente("Cadu", "2023", 19, 0231);
+        Baralho baralho = new Baralho();
+        await baralho.CriarBaralho();
+
+
+        await blackJack.CriarMesa(dealer,cliente,baralho);
+
+        blackJack.MostrarMesa(dealer,cliente);
+        await Console.Out.WriteLineAsync("");
+        blackJack.VarJogo(dealer,cliente);
 
 
 
@@ -72,6 +86,7 @@ internal class Program
         Console.WriteLine("-----------------------");
         Console.WriteLine("1-Iniciar Jogo");
         Console.WriteLine("2-Mostrar Baralho");
+        Console.WriteLine("3-Criar Mesa");
         Console.WriteLine("-----------------------");
     }
 }

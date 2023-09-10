@@ -6,6 +6,11 @@ public class Dealer
 
     public List<Carta> MaoDealer = new List<Carta>();
 
+    public Dealer(string nome)
+    {
+        Nome = nome;
+    }
+
     public void addCarta(Carta carta)
     {
         MaoDealer.Add(carta);

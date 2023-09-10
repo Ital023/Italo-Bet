@@ -1,5 +1,5 @@
 ﻿namespace Bet.Modelos;
-    internal class Pessoa
+    public class Pessoa
     {
         private string Nome { get; set; }
 
