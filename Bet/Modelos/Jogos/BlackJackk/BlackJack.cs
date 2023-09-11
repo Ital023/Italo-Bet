@@ -19,7 +19,69 @@ public class BlackJack
             }
         }
     }
-    public void VarJogo(Dealer dealer, Cliente cliente)
+
+    public int ValorCartasDealer(Dealer dealer)
+    {
+        int somaDealer = 0;
+
+        foreach (var carta in dealer.MaoDealer)
+        {
+            if (carta.getValue() == "KING" || carta.getValue() == "JACK" || carta.getValue() == "QUEEN")
+            {
+                somaDealer += 10;
+            }
+            else if (carta.getValue() == "ACE")
+            {
+                if (somaDealer >= 11)
+                {
+                    somaDealer += 1;
+                }
+                else
+                {
+                    somaDealer += 11;
+                }
+            }
+            else
+            {
+                somaDealer += int.Parse(carta.getValue());
+            }
+        }
+
+        return somaDealer;
+    }
+
+
+    public int ValorCartaJogador(Cliente cliente)
+    {
+        int somaCliente = 0;
+
+        foreach (var carta in cliente.MaoCliente)
+        {
+            if (carta.getValue() == "KING" || carta.getValue() == "JACK" || carta.getValue() == "QUEEN")
+            {
+                somaCliente += 10;
+            }
+            else if (carta.getValue() == "ACE")
+            {
+                if (somaCliente >= 11)
+                {
+                    somaCliente += 1;
+                }
+                else
+                {
+                    somaCliente += 11;
+                }
+            }
+            else
+            {
+                somaCliente += int.Parse(carta.getValue());
+            }
+        }
+
+        return somaCliente;
+    }
+
+    public async Task VarJogo(Dealer dealer, Cliente cliente,Baralho baralho)
     {
         int somaDealer = 0;
         int somaCliente = 0;
@@ -29,6 +91,17 @@ public class BlackJack
             if(carta.getValue() == "KING" || carta.getValue() == "JACK" || carta.getValue() == "QUEEN")
             {
                 somaDealer += 10;
+            }
+            else if(carta.getValue() == "ACE")
+            {
+                if(somaDealer >= 11)
+                {
+                    somaDealer += 1;
+                }
+                else
+                {
+                    somaDealer += 11;
+                }
             }
             else
             {
@@ -42,19 +115,40 @@ public class BlackJack
             {
                 somaCliente += 10;
             }
+            else if (carta.getValue() == "ACE")
+            {
+                if (somaCliente >= 11)
+                {
+                    somaCliente += 1;
+                }
+                else
+                {
+                    somaCliente += 11;
+                }
+            }
             else
             {
                 somaCliente += int.Parse(carta.getValue());
             }
         }
 
-        if(somaCliente > somaDealer)
+        while(somaDealer <= 16)
         {
-            Console.WriteLine("Vitoria do cliente");
+            Carta cartaNovaPuxada = await baralho.PuxarCarta();
+            dealer.addCarta(cartaNovaPuxada);
+            somaDealer += int.Parse(cartaNovaPuxada.getValue());
+        }
+
+        
+
+
+        if(somaCliente > somaDealer || somaDealer >= 22)
+        {
+            Console.WriteLine($"Vitoria do jogador soma: {somaCliente}");
         }
         else
         {
-            Console.WriteLine("Vitoria do dealer");
+            Console.WriteLine($"Vitoria do dealer soma: {somaDealer}");
         }
 
     }

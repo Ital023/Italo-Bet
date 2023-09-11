@@ -72,7 +72,44 @@ internal class Program
 
         blackJack.MostrarMesa(dealer,cliente);
         await Console.Out.WriteLineAsync("");
-        blackJack.VarJogo(dealer,cliente);
+
+        int pushCard = 1;
+
+        while( pushCard != 2 ) 
+        {
+            await Console.Out.WriteLineAsync("1-Sim 2-Não");
+            await Console.Out.WriteAsync("Deseja puxar mais uma carta: ");
+            int opcBj = int.Parse(Console.ReadLine());
+
+            if(opcBj == 1 )
+            {
+                if(blackJack.ValorCartaJogador(cliente) < 21)
+                {
+                    cliente.addCarta(await baralho.PuxarCarta());
+                }
+                else
+                {
+                    await Console.Out.WriteLineAsync("Voce estorou");
+                }
+            }
+            else
+            {
+                pushCard = 2;
+            }
+        }
+
+
+
+        await Console.Out.WriteLineAsync("");
+
+        await blackJack.VarJogo(dealer,cliente,baralho);
+
+        await Console.Out.WriteLineAsync("");
+
+        await Console.Out.WriteLineAsync("Depois da distribuição");
+
+        blackJack.MostrarMesa(dealer, cliente);
+
 
 
 
