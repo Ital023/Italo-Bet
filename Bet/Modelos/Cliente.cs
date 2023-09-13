@@ -1,23 +1,24 @@
 ﻿using Bet.Modelos.Jogos;
-
+using Bet.Modelos.Jogos.BlackJackk;
 
 namespace Bet.Modelos;
 
-public class Cliente : Pessoa
+public class Cliente : Jogador
 {
+    
     private int Id { get; set; }
-
+    private string Nome { get; set; }
+    private int Idade { get; set; }
     private string Senha { get; set; }
 
-    public List<Carta> MaoCliente = new List<Carta>();
-
-    public Cliente (string nome,string senha,int idade,int cpf)
+    public Cliente(int id, string nome, int idade, string senha)
     {
-        SetNome(nome);
-        SetIdade (idade);
-        SetCpf (cpf);
+        Id = id;
+        Nome = nome;
+        Idade = idade;
         Senha = senha;
     }
+
 
     public int GetId()
     {
@@ -29,13 +30,14 @@ public class Cliente : Pessoa
         return Senha;
     }
 
-    public void addCarta(Carta carta)
+    public int GetIdade()
     {
-        MaoCliente.Add(carta);
+        return Idade;
     }
 
-    public void removeCarta(Carta carta)
+    public string GetNome()
     {
-        MaoCliente.Remove(carta);
+        return Nome;
     }
 }
+

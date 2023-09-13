@@ -63,33 +63,35 @@ internal class Program
 
         BlackJack blackJack = new BlackJack();
         Dealer dealer = new Dealer("Daniel");
-        Cliente cliente = new Cliente("Cadu", "2023", 19, 0231);
+        Cliente cliente = new Cliente(1,"Cadu",19, "2424");
         Baralho baralho = new Baralho();
         await baralho.CriarBaralho();
 
 
-        await blackJack.CriarMesa(dealer,cliente,baralho);
+        await blackJack.CriarMesa(dealer, cliente, baralho);
 
-        blackJack.MostrarMesa(dealer,cliente);
+        blackJack.MostrarMesa(dealer, cliente);
         await Console.Out.WriteLineAsync("");
 
         int pushCard = 1;
 
-        while( pushCard != 2 ) 
+        while (pushCard != 2)
         {
             await Console.Out.WriteLineAsync("1-Sim 2-Não");
             await Console.Out.WriteAsync("Deseja puxar mais uma carta: ");
             int opcBj = int.Parse(Console.ReadLine());
 
-            if(opcBj == 1 )
+            if (opcBj == 1)
             {
-                if(blackJack.ValorCartaJogador(cliente) < 21)
+                if (blackJack.ValorCartaJogador(cliente) < 21)
                 {
                     cliente.addCarta(await baralho.PuxarCarta());
+                    cliente.MostrarMao();
                 }
                 else
                 {
                     await Console.Out.WriteLineAsync("Voce estorou");
+                    pushCard = 2;
                 }
             }
             else
@@ -102,7 +104,7 @@ internal class Program
 
         await Console.Out.WriteLineAsync("");
 
-        await blackJack.VarJogo(dealer,cliente,baralho);
+        await blackJack.VarJogo(dealer, cliente, baralho);
 
         await Console.Out.WriteLineAsync("");
 
