@@ -4,7 +4,7 @@ public class Jogador
 {
     public List<Carta> Mao = new List<Carta>();
 
-    public int SomaDasCartas;
+    public int SomaDasCartas { get; set; }
 
     public void addCarta(Carta carta)
     {

@@ -77,27 +77,30 @@ internal class Program
 
         while (pushCard != 2)
         {
-            await Console.Out.WriteLineAsync("1-Sim 2-Não");
-            await Console.Out.WriteAsync("Deseja puxar mais uma carta: ");
-            int opcBj = int.Parse(Console.ReadLine());
-
-            if (opcBj == 1)
-            {
-                if (blackJack.ValorCartaJogador(cliente) < 21)
+            
+                if (cliente.SomaDasCartas < 21)
                 {
-                    cliente.addCarta(await baralho.PuxarCarta());
-                    cliente.MostrarMao();
+                    await Console.Out.WriteLineAsync("");
+                    await Console.Out.WriteLineAsync("1-Sim 2-Não");
+                    await Console.Out.WriteAsync("Deseja puxar mais uma carta: ");
+                    int opcBj = int.Parse(Console.ReadLine());
+                    if (opcBj == 1)
+                    {
+                        cliente.addCarta(await baralho.PuxarCarta());
+                        cliente.MostrarMao();
+                    }
+                    else
+                    {
+                        pushCard = 2;
+                    }
                 }
                 else
                 {
                     await Console.Out.WriteLineAsync("Voce estorou");
                     pushCard = 2;
                 }
-            }
-            else
-            {
-                pushCard = 2;
-            }
+            
+            
         }
 
 

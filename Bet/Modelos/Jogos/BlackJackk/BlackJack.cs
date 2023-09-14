@@ -20,66 +20,7 @@ public class BlackJack
         }
     }
 
-    public int ValorCartasDealer(Dealer dealer)
-    {
-        int somaDealer = 0;
-
-        foreach (var carta in dealer.Mao)
-        {
-            if (carta.getValue() == "KING" || carta.getValue() == "JACK" || carta.getValue() == "QUEEN")
-            {
-                somaDealer += 10;
-            }
-            else if (carta.getValue() == "ACE")
-            {
-                if (somaDealer >= 11)
-                {
-                    somaDealer += 1;
-                }
-                else
-                {
-                    somaDealer += 11;
-                }
-            }
-            else
-            {
-                somaDealer += int.Parse(carta.getValue());
-            }
-        }
-
-        return somaDealer;
-    }
-
-
-    public int ValorCartaJogador(Cliente cliente)
-    {
-        int somaCliente = 0;
-
-        foreach (var carta in cliente.Mao)
-        {
-            if (carta.getValue() == "KING" || carta.getValue() == "JACK" || carta.getValue() == "QUEEN")
-            {
-                somaCliente += 10;
-            }
-            else if (carta.getValue() == "ACE")
-            {
-                if (somaCliente >= 11)
-                {
-                    somaCliente += 1;
-                }
-                else
-                {
-                    somaCliente += 11;
-                }
-            }
-            else
-            {
-                somaCliente += int.Parse(carta.getValue());
-            }
-        }
-
-        return somaCliente;
-    }
+    
 
     public async Task VarJogo(Dealer dealer, Cliente cliente, Baralho baralho)
     {
@@ -90,7 +31,7 @@ public class BlackJack
 
         cliente.MostrarMao();
 
-        while (dealer.SomaDasCartas <= 16)
+        while (dealer.SomaDasCartas <= 16 && cliente.SomaDasCartas <= 21)
         {
             Carta cartaNovaPuxada = await baralho.PuxarCarta();
             dealer.addCarta(cartaNovaPuxada);
@@ -115,9 +56,13 @@ public class BlackJack
                 dealer.SomaDasCartas += int.Parse(cartaNovaPuxada.getValue());
             }
         }
-        if (cliente.SomaDasCartas > dealer.SomaDasCartas && !(cliente.SomaDasCartas >= 22))
+        if ((cliente.SomaDasCartas > dealer.SomaDasCartas && !(cliente.SomaDasCartas >= 22)) || dealer.SomaDasCartas > 21)
         {
             Console.WriteLine($"Vitoria do jogador soma: {cliente.SomaDasCartas}");
+        }
+        else if(cliente.SomaDasCartas == dealer.SomaDasCartas)
+        {
+            await Console.Out.WriteLineAsync("Empate");
         }
         else
         {
