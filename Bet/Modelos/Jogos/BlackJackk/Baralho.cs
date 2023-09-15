@@ -26,26 +26,6 @@ public class Baralho
         Console.WriteLine($"Deck ID: {deck_id} | restante: {remaining}");
     }
 
-    /*public async Task PuxarCarta()
-    {
-        using (HttpClient client = new HttpClient())
-        {
-            var url = $"https://deckofcardsapi.com/api/deck/{this.deck_id}/draw/?count=1";
-            var response = await client.GetStringAsync(url);
-            var drawResponse = JsonConvert.DeserializeObject<DeckResponse>(response);
-
-            if (drawResponse.success)
-            {
-                Console.WriteLine($"Carta puxada: {drawResponse.cards[0].value} de {drawResponse.cards[0].suit}");
-                this.remaining = drawResponse.remaining;
-            }
-            else
-            {
-                Console.WriteLine("Não foi possível puxar uma carta.");
-            }
-        }
-    }*/
-
     public async Task<Carta> PuxarCarta()
     {
         using (HttpClient client = new HttpClient())

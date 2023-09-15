@@ -20,16 +20,14 @@ public class BlackJack
         }
     }
 
-    
 
-    public async Task VarJogo(Dealer dealer, Cliente cliente, Baralho baralho)
+
+    public async Task VarJogo(Dealer dealer, Cliente cliente, Baralho baralho,BlackJack blackJack)
     {
         int somaDealer = 0;
         int somaCliente = 0;
 
-        dealer.MostrarMao();
-
-        cliente.MostrarMao();
+        blackJack.MostrarMesa(dealer, cliente);
 
         while (dealer.SomaDasCartas <= 16 && cliente.SomaDasCartas <= 21)
         {
@@ -55,12 +53,17 @@ public class BlackJack
             {
                 dealer.SomaDasCartas += int.Parse(cartaNovaPuxada.getValue());
             }
+
+            Console.Clear();
+
+            blackJack.MostrarMesa(dealer, cliente);
+
         }
         if ((cliente.SomaDasCartas > dealer.SomaDasCartas && !(cliente.SomaDasCartas >= 22)) || dealer.SomaDasCartas > 21)
         {
             Console.WriteLine($"Vitoria do jogador soma: {cliente.SomaDasCartas}");
         }
-        else if(cliente.SomaDasCartas == dealer.SomaDasCartas)
+        else if (cliente.SomaDasCartas == dealer.SomaDasCartas)
         {
             await Console.Out.WriteLineAsync("Empate");
         }
@@ -69,7 +72,7 @@ public class BlackJack
             Console.WriteLine($"Vitoria do dealer soma: {dealer.SomaDasCartas}");
         }
     }
-         
+
 
     public void MostrarMesa(Dealer dealer, Cliente cliente)
     {

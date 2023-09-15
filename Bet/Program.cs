@@ -59,61 +59,93 @@ internal class Program
              }
          } 
         */
+        int loop = 0;
 
-
-        BlackJack blackJack = new BlackJack();
-        Dealer dealer = new Dealer("Daniel");
-        Cliente cliente = new Cliente(1,"Cadu",19, "2424");
-        Baralho baralho = new Baralho();
-        await baralho.CriarBaralho();
-
-
-        await blackJack.CriarMesa(dealer, cliente, baralho);
-
-        blackJack.MostrarMesa(dealer, cliente);
-        await Console.Out.WriteLineAsync("");
-
-        int pushCard = 1;
-
-        while (pushCard != 2)
+        while (loop != 2)
         {
-            
-                if (cliente.SomaDasCartas < 21)
+            menu();
+
+            int opcaoMenu = int.Parse(Console.ReadLine());
+
+            if (opcaoMenu == 1)
+            {
+                Console.Clear();
+                BlackJack blackJack = new BlackJack();
+                Dealer dealer = new Dealer("Daniel");
+                Cliente cliente = new Cliente(1, "Cadu", 19, "2424");
+                Baralho baralho = new Baralho();
+                await baralho.CriarBaralho();
+
+
+                await blackJack.CriarMesa(dealer, cliente, baralho);
+
+                blackJack.MostrarMesa(dealer, cliente);
+                await Console.Out.WriteLineAsync("");
+
+                await Console.Out.WriteLineAsync("Clique para continuar");
+
+
+                Console.ReadKey();
+
+                int pushCard = 1;
+
+                while (pushCard != 2)
                 {
-                    await Console.Out.WriteLineAsync("");
-                    await Console.Out.WriteLineAsync("1-Sim 2-Não");
-                    await Console.Out.WriteAsync("Deseja puxar mais uma carta: ");
-                    int opcBj = int.Parse(Console.ReadLine());
-                    if (opcBj == 1)
+
+                    if (cliente.SomaDasCartas < 21)
                     {
-                        cliente.addCarta(await baralho.PuxarCarta());
-                        cliente.MostrarMao();
+                        await Console.Out.WriteLineAsync("");
+                        await Console.Out.WriteLineAsync("1-Sim 2-Não");
+                        await Console.Out.WriteAsync("Deseja puxar mais uma carta: ");
+                        int opcBj = int.Parse(Console.ReadLine());
+                        if (opcBj == 1)
+                        {
+                            cliente.addCarta(await baralho.PuxarCarta());
+                            Console.Clear();
+                            blackJack.MostrarMesa(dealer, cliente);
+                        }
+                        else
+                        {
+                            pushCard = 2;
+                        }
                     }
                     else
                     {
+                        await Console.Out.WriteLineAsync("Voce estorou");
                         pushCard = 2;
                     }
+
+
                 }
-                else
-                {
-                    await Console.Out.WriteLineAsync("Voce estorou");
-                    pushCard = 2;
-                }
-            
-            
+
+                Console.Clear();
+
+
+                await Console.Out.WriteLineAsync("");
+
+
+                await blackJack.VarJogo(dealer, cliente, baralho,blackJack);
+
+                await Console.Out.WriteLineAsync("Clique para continuar");
+
+
+                Console.ReadKey();
+
+                Console.Clear();
+
+                await Console.Out.WriteLineAsync("Clique para sair");
+
+
+                Console.ReadKey();
+
+            }
+            else
+            {
+                loop = 2;
+            }
         }
 
-
-
-        await Console.Out.WriteLineAsync("");
-
-        await blackJack.VarJogo(dealer, cliente, baralho);
-
-        await Console.Out.WriteLineAsync("");
-
-        await Console.Out.WriteLineAsync("Depois da distribuição");
-
-        blackJack.MostrarMesa(dealer, cliente);
+        
 
 
 
@@ -127,8 +159,6 @@ internal class Program
         Console.Clear();
         Console.WriteLine("-----------------------");
         Console.WriteLine("1-Iniciar Jogo");
-        Console.WriteLine("2-Mostrar Baralho");
-        Console.WriteLine("3-Criar Mesa");
         Console.WriteLine("-----------------------");
     }
 }
