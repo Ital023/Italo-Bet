@@ -7,22 +7,26 @@ public class BlackJack
 {
     public async Task CriarMesa(Dealer dealer, Cliente cliente, Baralho baralho)
     {
+        dealer.Mao.Clear();
+        cliente.Mao.Clear();
+
         if (dealer.Mao.Count <= 0 || cliente.Mao.Count <= 0)
         {
-            for (int i = 0; i < 2; i++)
-            {
+            
                 Carta cartaCliente = await baralho.PuxarCarta();
                 cliente.addCarta(cartaCliente);
 
                 Carta cartaDealer = await baralho.PuxarCarta();
                 dealer.addCarta(cartaDealer);
-            }
+
+                cartaCliente = await baralho.PuxarCarta();
+                cliente.addCarta(cartaCliente);
         }
     }
 
 
 
-    public async Task VarJogo(Dealer dealer, Cliente cliente, Baralho baralho,BlackJack blackJack)
+    public async Task<int> VarJogo(Dealer dealer, Cliente cliente, Baralho baralho,BlackJack blackJack)
     {
         int somaDealer = 0;
         int somaCliente = 0;
@@ -62,14 +66,17 @@ public class BlackJack
         if ((cliente.SomaDasCartas > dealer.SomaDasCartas && !(cliente.SomaDasCartas >= 22)) || dealer.SomaDasCartas > 21)
         {
             Console.WriteLine($"Vitoria do jogador soma: {cliente.SomaDasCartas}");
+            return 1;
         }
         else if (cliente.SomaDasCartas == dealer.SomaDasCartas)
         {
             await Console.Out.WriteLineAsync("Empate");
+            return 0;
         }
         else
         {
             Console.WriteLine($"Vitoria do dealer soma: {dealer.SomaDasCartas}");
+            return 2;
         }
     }
 

@@ -6,23 +6,25 @@ namespace Bet.Modelos;
 public class Cliente : Jogador
 {
     
-    private int Id { get; set; }
+    private int Cpf { get; set; }
     private string Nome { get; set; }
     private int Idade { get; set; }
     private string Senha { get; set; }
+    private double Saldo { get; set; }
 
-    public Cliente(int id, string nome, int idade, string senha)
+    public Cliente(int Cpf, string nome, int idade, string senha)
     {
-        Id = id;
+        Cpf = Cpf;
         Nome = nome;
         Idade = idade;
         Senha = senha;
+        Saldo = 0;
     }
 
 
-    public int GetId()
+    public int GetCpf()
     {
-        return Id;
+        return Cpf;
     }
 
     public string GetSenha()
@@ -38,6 +40,20 @@ public class Cliente : Jogador
     public string GetNome()
     {
         return Nome;
+    }
+
+    public double GetSaldo()
+    {
+        return Saldo;
+    }
+
+    public void Depositar(double valor)
+    {
+        Saldo += valor;
+    }
+    public void Sacar(double valor)
+    {
+        Saldo -= valor;
     }
 }
 
